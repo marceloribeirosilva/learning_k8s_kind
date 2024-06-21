@@ -1,0 +1,12 @@
+-- Criar um cluster nomeado através de um arquivo
+kind create cluster --config=k8s/kind.yaml --name=fullcycle
+
+-- Pegar os clusters que estão configurados no config
+kubectl config get-clusters
+
+-- Para mudar para outro contexto (Cluster)
+kubectl config use-context {nome do cluster}
+
+-- Pegar os nodes do kubernetes
+kubectl get nodes
+
