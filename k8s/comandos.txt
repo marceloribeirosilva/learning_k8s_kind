@@ -10,3 +10,34 @@ kubectl config use-context {nome do cluster}
 -- Pegar os nodes do kubernetes
 kubectl get nodes
 
+-- Pegar a descrição dos pods
+kubectl describe pod {nome dos pods}
+
+-- Pegar o histórico de revisões do deployment
+kubectl rollout history deployment {nome do deployment}
+
+-- Voltando para a última versão do replicaset que estava rodando com o deployment
+kubectl rollout undo deployment {nome do deployment}
+
+-- Voltando para uma revisão específica do replicaset 
+kubectl rollout undo deployment {nome do deployment} --to-revision={número da revisão que quer voltar}
+
+-- Ver os eventos do deployment
+kubectl describe deployment {nome do deployment}
+
+-- Ordem
+deployment > replicaset > pod
+
+-- Para aplicar os arquivos de configuração yaml
+kubectl apply -f {pasta e nome do arquivo}
+
+-- Para exibir os services
+kubectl get services ou kubectl get svc
+
+-- Fazendo um redirecionamento de porta quando se está fora do cluster
+kubectl port-forward svc/{nome do service} {porta na sua máquina}:{porta do service Kubernetes}
+exemplo: kubectl port-forward svc/goserver-service 8000:80
+
+-- Acessando a api do kubernetes via proxy
+kubectl proxy --port=8080 (A porta pode ser outra)
+
