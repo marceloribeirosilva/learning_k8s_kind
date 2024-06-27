@@ -41,3 +41,8 @@ exemplo: kubectl port-forward svc/goserver-service 8000:80
 -- Acessando a api do kubernetes via proxy
 kubectl proxy --port=8080 (A porta pode ser outra)
 
+-- acessar o bash do pod
+kubectl exec -it {nome do pod} -- bash
+
+-- Para pegar os logs do pod
+kubectl logs {nome do pod}
