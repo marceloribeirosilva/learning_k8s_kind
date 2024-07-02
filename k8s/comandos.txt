@@ -46,3 +46,15 @@ kubectl exec -it {nome do pod} -- bash
 
 -- Para pegar os logs do pod
 kubectl logs {nome do pod}
+
+-- Subir o deployment e já ficar dando um watch nos pods
+kubectl apply -f k8s/deployment.yaml && watch -n1 kubectl get pods
+
+-- Pegando as api services disponíveis em Kubernetes
+kubectl get apiservices
+
+-- Para ver o quanto de vcpu e memória o pod está usando (Consumo)
+kubectl top pod {nome do pod}
+
+
+

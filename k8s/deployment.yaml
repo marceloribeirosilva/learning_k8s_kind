@@ -15,20 +15,54 @@ spec:
         app: goserver
     spec:
       containers:
-        - name: goserver
-          image: marcelors/hello-go:v5.2
-          envFrom:
-            - configMapRef:
-                name: goserver-env
-            - secretRef:
-                name: goserver-secret
-          volumeMounts:
-            - mountPath: "/go/myfamily"
-              name: config
+      - name: goserver
+        image: marcelors/hello-go:v9.6
+
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+
+        startupProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+          periodSeconds: 3
+          failureThreshold: 30
+
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+          periodSeconds: 3
+          failureThreshold: 1
+          # initialDelaySeconds: 10
+
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+          periodSeconds: 5
+          failureThreshold: 1
+          timeoutSeconds: 1
+          successThreshold: 1
+          # initialDelaySeconds: 10
+
+        envFrom:
+        - configMapRef:
+            name: goserver-env
+        - secretRef:
+            name: goserver-secret
+        volumeMounts:
+        - mountPath: "/go/myfamily"
+          name: config
       volumes:
-        - name: config
-          configMap:
-            name: configmap-family
-            items:
-            - key: members
-              path: "family.txt"
+      - name: config
+        configMap:
+          name: configmap-family
+          items:
+          - key: members
+            path: "family.txt"
